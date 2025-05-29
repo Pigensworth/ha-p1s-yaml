@@ -1,0 +1,225 @@
+type: sections
+path: p1s
+max_columns: 10
+title: P1S
+sections:
+  - type: grid
+    cards:
+      - type: heading
+        icon: ""
+        heading_style: title
+      - show_name: true
+        show_icon: false
+        type: button
+        entity: switch.p1s_enable_camera
+        grid_options:
+          columns: 12
+          rows: 1
+        show_state: true
+        name: Camera
+      - show_state: true
+        show_name: true
+        camera_view: auto
+        fit_mode: cover
+        type: picture-entity
+        entity: camera.p1s_camera
+        image: https://demo.home-assistant.io/stub_config/bedroom.png
+        camera_image: camera.p1s_camera
+  - type: grid
+    cards:
+      - type: heading
+        heading_style: title
+      - type: custom:timer-bar-card
+        entities:
+          - sensor.p1s_gcode_filename
+          - sensor.p1s_current_layer
+          - sensor.p1s_print_progress
+          - sensor.p1s_remaining_time
+          - binary_sensor.p1s_hms_errors
+          - binary_sensor.p1s_print_error
+          - sensor.p1s_print_status
+  - type: grid
+    cards:
+      - type: heading
+        icon: ""
+        heading_style: title
+      - type: custom:mushroom-fan-card
+        entity: fan.p1s_cooling_fan
+        icon_animation: true
+        show_percentage_control: true
+        name: Nozzle Fan
+        collapsible_controls: false
+        show_oscillate_control: false
+        hold_action:
+          action: more-info
+      - type: custom:mushroom-fan-card
+        entity: fan.p1s_chamber_fan
+        name: Chamber Fan
+        show_percentage_control: true
+        icon_animation: true
+        show_direction_control: false
+      - type: custom:mushroom-fan-card
+        entity: fan.p1s_aux_fan
+        name: Aux Fan
+        show_percentage_control: true
+        icon_animation: true
+      - show_name: true
+        show_icon: false
+        type: button
+        entity: light.p1s_chamber_light
+        name: Chamber Light
+        show_state: true
+        grid_options:
+          columns: 6
+          rows: 2
+      - type: custom:ha-bambulab-print_control-card
+        printer: a1e36477740434fe8c9dba83272173fb
+  - type: grid
+    cards:
+      - type: heading
+        icon: mdi:thermometer
+        heading: Actual Temperatures
+        heading_style: title
+      - type: gauge
+        entity: sensor.p1s_nozzle_temperature
+        min: 20
+        max: 300
+        needle: false
+        grid_options:
+          columns: 6
+          rows: auto
+        name: Nozzle
+      - type: gauge
+        entity: sensor.p1s_bed_temperature
+        needle: false
+        min: 20
+        max: 100
+        grid_options:
+          columns: 6
+          rows: auto
+        name: Bed
+      - type: heading
+        icon: thermometer
+        heading: Target Temperatures
+        heading_style: title
+      - type: custom:mushroom-number-card
+        entity: number.p1s_nozzle_target_temperature
+        display_mode: slider
+        name: Nozzle
+      - type: custom:mushroom-number-card
+        entity: number.p1s_bed_target_temperature
+        name: Bed
+        icon: mdi:bench
+  - type: grid
+    cards:
+      - type: heading
+        icon: ""
+        heading_style: title
+      - type: button
+        entity: input_boolean.bed_leveling
+        features_position: bottom
+        vertical: true
+        grid_options:
+          columns: 4
+          rows: 2
+      - type: button
+        entity: input_boolean.ams_toggle
+        features_position: bottom
+        vertical: true
+        grid_options:
+          columns: 4
+          rows: 2
+      - type: button
+        entity: input_boolean.timelapse
+        features_position: bottom
+        vertical: true
+        grid_options:
+          columns: 4
+          rows: 2
+      - show_name: true
+        show_icon: true
+        type: button
+        entity: input_boolean.start_print
+        grid_options:
+          columns: 4
+          rows: 2
+        name: Start Later
+      - type: custom:mushroom-select-card
+        entity: input_select.part
+        name: Part
+        grid_options:
+          columns: 8
+          rows: 2
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: File Name
+            entities:
+              - entity: input_text.file_name
+            state_color: false
+            show_header_toggle: false
+        grid_options:
+          columns: 16
+          rows: auto
+      - show_name: true
+        show_icon: true
+        type: button
+        entity: input_boolean.start_now
+        show_state: false
+        grid_options:
+          columns: 8
+          rows: 2.35
+      - type: entities
+        title: Set Time
+        entities:
+          - entity: input_datetime.start_date_time
+            secondary_info: entity-id
+        grid_options:
+          columns: 16
+          rows: auto
+    column_span: 2
+  - type: grid
+    cards:
+      - type: heading
+        heading_style: title
+      - chart_type: line
+        period: 5minute
+        type: statistics-graph
+        entities:
+          - sensor.p1s_bed_temperature
+          - sensor.p1s_nozzle_temperature
+        stat_types:
+          - mean
+          - min
+          - max
+        logarithmic_scale: false
+        min_y_axis: 20
+        fit_y_data: false
+        grid_options:
+          columns: 24
+          rows: 6
+        days_to_show: 0.001
+    column_span: 2
+  - type: grid
+    cards:
+      - type: heading
+        icon: ""
+        heading_style: title
+      - type: custom:ha-bambulab-ams-card
+        entity: ""
+        header: ""
+        subtitle: ""
+        style: vector
+        ams: 9f35b6d108c0747fb98b4c030bd8ab14
+        spool_anim_reflection: true
+        show_type: true
+        show_info_bar: true
+        grid_options:
+          rows: 5
+cards: []
+header:
+  card:
+    type: markdown
+    content: |
+      # 
+    text_only: true
