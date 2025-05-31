@@ -5,6 +5,7 @@
 # Setup
 ## Main Screen
 For the main screen, create a new dashboard, go to **edit dashboard -> edit view -> edit in yaml** and replace everything in there with the contents of [p1s_main_screen.yaml](https://github.com/Pigensworth/ha-p1s-yaml/blob/main/p1s_main_screen.yaml). It will throw some errors to start with, but that will be fixed later.
+The 'part' list selection is only for easily reprinting something instead of trying to remember the file name.
 
 ## Automations
 Create a new automation, edit in yaml, and replace it with [print.yaml](https://github.com/Pigensworth/ha-p1s-yaml/blob/main/print.yaml). Repeat with [update_filename.yaml](https://github.com/Pigensworth/ha-p1s-yaml/blob/main/update_filename.yaml)
