@@ -42,7 +42,7 @@ actions:
       vibration_cali: true
       layer_inspect: false
       filepath: "{{ file_name }}.gcode.3mf"
-      ams_mapping: "-1,1,-1,-1"
+      ams_mapping: ""
     enabled: true
     target:
       device_id: a1e36477740434fe8c9dba83272173fb
