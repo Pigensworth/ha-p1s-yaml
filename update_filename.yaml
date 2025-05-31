@@ -1,0 +1,16 @@
+alias: Update Print Object
+description: ""
+triggers:
+  - trigger: state
+    entity_id:
+      - input_select.part
+conditions: []
+actions:
+  - variables:
+      object: "{{ states('input_select.part') }}"
+  - target:
+      entity_id: input_text.file_name
+    data:
+      value: "{{ object }}"
+    action: input_text.set_value
+mode: single
