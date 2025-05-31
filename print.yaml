@@ -1,0 +1,70 @@
+alias: Delay Start
+description: ""
+triggers:
+  - trigger: time
+    at: input_datetime.start_date_time
+    id: time
+  - trigger: state
+    entity_id:
+      - input_boolean.start_now
+    to: "on"
+    from: "off"
+    id: now
+conditions:
+  - condition: state
+    entity_id: input_boolean.start_print
+    state: "on"
+    enabled: false
+  - condition: or
+    conditions:
+      - condition: trigger
+        id:
+          - now
+      - condition: state
+        entity_id: input_boolean.start_print
+        state: "on"
+actions:
+  - variables:
+      file_name: "{{ states('input_text.file_name') }}"
+      ams1: "{{ states('input_number.ams1') | string }}"
+      ams2: "{{ states('input_number.ams2') | string }}"
+      ams3: "{{ states('input_number.ams3') | string }}"
+      ams4: "{{ states('input_number.ams4') | string }}"
+    enabled: true
+  - action: bambu_lab.print_project_file
+    metadata: {}
+    data:
+      plate: 1
+      timelapse: "{{ is_state('input_boolean.timelapse', 'on') }}"
+      bed_leveling: "{{ is_state('input_boolean.bed_leveling', 'on') }}"
+      use_ams: "{{ is_state('input_boolean.ams_toggle', 'on') }}"
+      flow_cali: false
+      vibration_cali: true
+      layer_inspect: false
+      filepath: "{{ file_name }}.gcode.3mf"
+      ams_mapping: "-1,1,-1,-1"
+    enabled: true
+    target:
+      device_id: a1e36477740434fe8c9dba83272173fb
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: input_boolean.start_print
+            state: "on"
+        sequence:
+          - action: input_boolean.toggle
+            metadata: {}
+            data: {}
+            target:
+              entity_id: input_boolean.start_print
+      - conditions:
+          - condition: state
+            entity_id: input_boolean.start_now
+            state: "on"
+        sequence:
+          - action: input_boolean.toggle
+            metadata: {}
+            data: {}
+            target:
+              entity_id: input_boolean.start_now
+mode: single
